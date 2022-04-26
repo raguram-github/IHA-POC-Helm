@@ -32,14 +32,14 @@ stages:
       artifact: manifests
 
 
-- stage: Helm_bake_and_deploy
-  displayName: Helm bake and deploy to openshift
-  jobs:
-  - job: Deploy
-    displayName: Helm deploy
-    pool:
-      vmImage: ubuntu-latest
-    steps:
+# - stage: Helm_bake_and_deploy
+#   displayName: Helm bake and deploy to openshift
+#   jobs:
+#   - job: Deploy
+#     displayName: Helm deploy
+#     pool:
+#       vmImage: ubuntu-latest
+#     steps:
     
     
 
