@@ -30,6 +30,15 @@ stages:
         tags: '$(tag)'
     - publish: '$(Build.SourcesDirectory)/manifests'
       artifact: manifests
+    - task: KubernetesManifest@0
+      inputs:
+        action: 'bake'
+        namespace: 'dummy'
+        containers: 'nevermind'
+        helmChart: 'ihahelmpoc/.'
+        releaseName: 'firsthelmrelease'
+        overrides: 'dockerImageTagName=$(Build.BuildId)''
+
 
 
 # - stage: Helm_bake_and_deploy
