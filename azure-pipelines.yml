@@ -30,11 +30,21 @@ stages:
         tags: '$(tag)'
     - publish: '$(Build.SourcesDirectory)/manifests'
       artifact: manifests
-    - task: KubernetesManifest@0
+    # - task: KubernetesManifest@0
+    #   inputs:
+    #     action: 'bake'
+    #     namespace: 'dummy'
+    #     containers: 'nevermind'
+    #     helmChart: 'helm/ihahelmpoc/.'
+    #     releaseName: 'firsthelmrelease'
+    #     overrides: 'dockerImageTagName=$(tag)'
+    - task: HelmDeploy@0
       inputs:
-        action: 'bake'
-        namespace: 'dummy'
-        containers: 'nevermind'
-        helmChart: 'helm/ihahelmpoc/.'
+        connectionType: 'Kubernetes Service Connection'
+        kubernetesServiceConnection: 'openshift-sandbox-raguraman-sirius-stage-1650458998345'
+        namespace: 'raguraman-sirius-stage'
+        command: 'install'
+        chartType: 'Name'
+        chartName: 'helm/ihahelmpoc/.'
         releaseName: 'firsthelmrelease'
-        overrides: 'dockerImageTagName=$(Build.BuildId)'
+        overrideValues: 'dockerImageTagName=$(tag)'
