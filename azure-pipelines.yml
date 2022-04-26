@@ -52,7 +52,7 @@ stages:
     
     
 
-  # displayName: 'Deploy the container to openshift'
+  # displayName: Deploy the container to openshift
   # dependsOn: Build_and_Push
   # jobs:
   # - deployment: Deploy
