@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.containerAppName }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.containerAppName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.containerAppName }}
+    spec:
+      containers:
+        - name: {{ .Values.containerAppName }}
+          image: docker.io/{{ .Values.image.repository }}:{{ .Values.dockerImageTagName }}
+          ports:
+          - containerPort: {{ .Values.containerPort }}
