@@ -35,6 +35,6 @@ stages:
         action: 'bake'
         namespace: 'dummy'
         containers: 'nevermind'
-        helmChart: 'ihahelmpoc/.'
+        helmChart: 'helm/ihahelmpoc/.'
         releaseName: 'firsthelmrelease'
         overrides: 'dockerImageTagName=$(Build.BuildId)'
