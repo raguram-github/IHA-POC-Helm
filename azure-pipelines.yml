@@ -37,4 +37,4 @@ stages:
         containers: 'nevermind'
         helmChart: 'ihahelmpoc/.'
         releaseName: 'firsthelmrelease'
-        overrides: 'dockerImageTagName=$(Build.BuildId)''
+        overrides: 'dockerImageTagName=$(Build.BuildId)'
