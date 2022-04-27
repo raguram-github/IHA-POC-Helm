@@ -60,7 +60,7 @@ stages:
               releaseName: 'release-dev'
               overrideValues: 'dockerImageTagName=$(tag)'
               valueFile: '$(Pipeline.Workspace)/helm/ihahelmpoc/values/values-dev.yaml'
-          - publish: '$(Build.SourcesDirectory)/helm'
+          - publish: '$(Pipeline.Workspace)/helm'
             artifact: helm
             
 - stage: 'Prod_Deployment'
