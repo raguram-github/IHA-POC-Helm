@@ -28,23 +28,34 @@ stages:
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
         tags: '$(tag)'
-    - publish: '$(Build.SourcesDirectory)/manifests'
-      artifact: manifests
-    # - task: KubernetesManifest@0
-    #   inputs:
-    #     action: 'bake'
-    #     namespace: 'dummy'
-    #     containers: 'nevermind'
-    #     helmChart: 'helm/ihahelmpoc/.'
-    #     releaseName: 'firsthelmrelease'
-    #     overrides: 'dockerImageTagName=$(tag)'
-    - task: HelmDeploy@0
-      inputs:
-        connectionType: 'Kubernetes Service Connection'
-        kubernetesServiceConnection: 'openshift-sandbox-raguraman-sirius-stage-1650458998345'
-        namespace: 'raguraman-sirius-stage'
-        command: 'install'
-        chartType: 'Name'
-        chartName: 'helm/ihahelmpoc/.'
-        releaseName: 'release-$(tag)'
-        overrideValues: 'dockerImageTagName=$(tag)'
+    - publish: '$(Build.SourcesDirectory)/helm'
+      artifact: helm
+    
+
+- stage: 'Deploy'
+  displayName: 'Deploy the container to openshift'
+  dependsOn: Build_and_Push
+  jobs:
+  - deployment: Deploy
+    displayName: Deploy
+    pool:
+      vmImage: 'ubuntu-20.04'
+    environment: 'raguraman-sirius-stage'
+    #variables:
+    #- group: Release
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: helm
+          - task: HelmDeploy@0
+            inputs:
+              connectionType: 'Kubernetes Service Connection'
+              kubernetesServiceConnection: 'openshift-sandbox-raguraman-sirius-stage-1650458998345'
+              namespace: 'raguraman-sirius-stage'
+              command: 'install'
+              chartType: 'Name'
+              chartName: 'helm/ihahelmpoc/.'
+              releaseName: 'release-$(tag)'
+              overrideValues: 'dockerImageTagName=$(tag)'
