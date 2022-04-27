@@ -16,7 +16,7 @@ spec:
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
-  name: external-route
+  name: {{ .Values.exposeRouteName }}
   namespace: {{.Values.clusterNamespace}}
 spec:
   path: /

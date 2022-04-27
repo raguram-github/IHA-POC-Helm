@@ -6,11 +6,13 @@ replicaCount: 1
 
 clusterNamespace: raguraman-sirius-stage
 
-exposeServiceName: external-expose-service
+exposeServiceName: external-expose-service-helm
 
 containerPort: 3000
 
-containerAppName : web
+containerAppName: web-helm
+
+exposeRouteName: external-route-helm
 
 image:
   repository: fiveout/iha_poc
