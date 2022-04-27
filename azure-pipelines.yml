@@ -56,6 +56,6 @@ stages:
               namespace: 'raguraman-sirius-stage'
               command: 'install'
               chartType: 'Name'
-              chartName: 'helm/ihahelmpoc/.'
+              chartName: '$(Pipeline.Workspace)/helm/ihahelmpoc/.'
               releaseName: 'release-$(tag)'
               overrideValues: 'dockerImageTagName=$(tag)'
