@@ -1,0 +1,5 @@
+exposeServiceName: external-expose-service-prod-helm
+
+containerAppName: web-prod-helm
+
+exposeRouteName: external-route-prod-helm
