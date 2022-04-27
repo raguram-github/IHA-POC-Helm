@@ -59,4 +59,4 @@ stages:
               chartName: '$(Pipeline.Workspace)/helm/ihahelmpoc/.'
               releaseName: 'release-dev'
               overrideValues: 'dockerImageTagName=$(tag)'
-              valueFile: 'ihahelmpoc/values/values-dev.yaml'
+              valueFile: '$(Pipeline.Workspace)/helm/ihahelmpoc/values/values-dev.yaml'
