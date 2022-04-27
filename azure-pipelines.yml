@@ -32,8 +32,8 @@ stages:
       artifact: helm
     
 
-- stage: 'Deploy'
-  displayName: 'Deploy the container to openshift'
+- stage: 'Dev_Deployment'
+  displayName: 'Deploy the container to openshift - dev'
   dependsOn: Build_and_Push
   jobs:
   - deployment: Deploy
@@ -60,3 +60,34 @@ stages:
               releaseName: 'release-dev'
               overrideValues: 'dockerImageTagName=$(tag)'
               valueFile: '$(Pipeline.Workspace)/helm/ihahelmpoc/values/values-dev.yaml'
+          - publish: '$(Build.SourcesDirectory)/helm'
+            artifact: helm
+            
+- stage: 'Prod_Deployment'
+  displayName: 'Deploy the container to openshift - prod'
+  dependsOn: Dev_Deployment
+  jobs:
+  - deployment: Deploy
+    displayName: Deploy
+    pool:
+      vmImage: 'ubuntu-20.04'
+    environment: 'raguraman-sirius-stage'
+    #variables:
+    #- group: Release
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: helm
+          - task: HelmDeploy@0
+            inputs:
+              connectionType: 'Kubernetes Service Connection'
+              kubernetesServiceConnection: 'openshift-sandbox-raguraman-sirius-stage-1650458998345'
+              namespace: 'raguraman-sirius-stage'
+              command: 'upgrade'
+              chartType: 'Name'
+              chartName: '$(Pipeline.Workspace)/helm/ihahelmpoc/.'
+              releaseName: 'release-prod'
+              overrideValues: 'dockerImageTagName=$(tag)'
+              valueFile: '$(Pipeline.Workspace)/helm/ihahelmpoc/values/values-prod.yaml'
