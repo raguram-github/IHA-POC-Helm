@@ -46,5 +46,5 @@ stages:
         command: 'install'
         chartType: 'Name'
         chartName: 'helm/ihahelmpoc/.'
-        releaseName: 'firsthelmrelease'
+        releaseName: 'release-$(tag)'
         overrideValues: 'dockerImageTagName=$(tag)'
