@@ -14,7 +14,7 @@ containerAppName: web-helm
 
 exposeRouteName: external-route-helm
 
-build-id: set-value-for-buildId
+buildId: set-value-for-buildId
 
 image:
   repository: fiveout/iha_poc
