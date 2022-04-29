@@ -9,7 +9,7 @@ resources:
 - repo: self
 
 variables:
-  tag: '$(Build.BuildId)'
+  tag: 'azppl3-$(Build.BuildId)'
 
 stages:
 - stage: Build_and_Push
@@ -89,5 +89,5 @@ stages:
               chartType: 'Name'
               chartName: '$(Pipeline.Workspace)/helm/ihahelmpoc/.'
               releaseName: 'release-prod'
-              overrideValues: 'dockerImageTagName=$(tag)'
+              overrideValues: 'dockerImageTagName=$(tag),buildId=$(tag)'
               valueFile: '$(Pipeline.Workspace)/helm/ihahelmpoc/values/values-prod.yaml'
