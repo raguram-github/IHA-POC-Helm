@@ -40,6 +40,7 @@ helm.sh/chart: {{ include "ihahelmpoc.chart" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+build-id: {{ .Values.buildId }}
 {{- end }}
 
 {{/*
